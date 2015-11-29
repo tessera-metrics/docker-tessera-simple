@@ -1,22 +1,19 @@
 from nodesource/node:precise
-maintainer Adam Alpern <adm.alpern@gmail.com>
+maintainer Adam Alpern <adam.alpern@gmail.com>
 
 run apt-get update
 run apt-get install -y python-pip python-dev curl git gunicorn supervisor
+run pip install virtualenv
 
 # Tessera
 add ./config.py /var/lib/tessera/config.py
 
 run	mkdir /src
-run	git clone https://github.com/urbanairship/tessera.git /src/tessera
+run	git clone https://github.com/aalpern/tessera.git /src/tessera
 workdir	/src/tessera
-run	pip install -r requirements.txt
-run	pip install -r dev-requirements.txt
-run	npm install -g grunt-cli
-run	npm install
-run	grunt
-run	invoke db.init
-run	invoke run & sleep 5 && invoke json.import 'demo/*.json'
+run script/setup
+workdir	/src/tessera/tessera-server
+run	../script/server & sleep 5 && . env/bin/activate && invoke json.import '../demo/*.json'
 
 # Supervisord
 add	./supervisord.conf /etc/supervisor/conf.d/supervisord.conf
