@@ -1,9 +1,10 @@
-from nodesource/node:precise
+from nodesource/node:5.5.0
 maintainer Adam Alpern <adam.alpern@gmail.com>
 
 run apt-get -y update
 run apt-get -y install python-pip python-dev curl git gunicorn supervisor
 run pip install virtualenv
+run npm install -g grunt-cli
 
 # Tessera
 add ./config.py /var/lib/tessera/config.py
