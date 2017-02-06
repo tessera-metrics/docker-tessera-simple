@@ -14,5 +14,13 @@ setting the `GRAPHITE_URL` environment variable in your `docker`
 invocation:
 
 ```
-docker run -P -e GRAPHITE_URL=http://graphite.host:port -it aalpern/tessera-simple
+docker run -P -e GRAPHITE_URL=http://graphite.host:port -it tesserametrics/tessera-simple
+```
+
+```
+docker run -d\
+ --name tessera\
+ --restart=always\
+ -p 5000:5000\
+ tesserametrics/tessera-simple
 ```
